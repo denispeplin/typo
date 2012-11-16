@@ -168,7 +168,16 @@ class Admin::ContentController < Admin::BaseController
       
       @article.state = "draft" if @article.draft
 
+      if params[:merge_with]
+        merge_with = Content.find_by_id params[:merge_with]
+      end
+
       if @article.save
+        if merge_with
+          @article.body = @article.body + merge_with.body
+          @article.save!
+          merge_with.destroy
+        end
         destroy_the_draft unless @article.draft
         set_article_categories
         set_the_flash
