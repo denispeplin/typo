@@ -4,14 +4,17 @@ Feature: Merging articles
 
   Background:
     Given the blog is set up
-
-    And the following articles exists:
-      | title    | author | body   |
-      | Article1 | admin  | body 1 |
-      | Article2 | admin  | body 2 |
+    And I am logged into the admin panel
+    And I am on the new article page
+    And I fill in "article_title" with "Foobar1"
+    And I fill in "article__body_and_extended_editor" with "Lorem Ipsum 1"
+    And I press "Publish"
+    And I am on the new article page
+    And I fill in "article_title" with "Foobar2"
+    And I fill in "article__body_and_extended_editor" with "Lorem Ipsum 2"
+    And I press "Publish"
 
   Scenario: Merge articles
-    Given I am logged into the admin panel
     When I go to the home page
-    And I follow "Article1"
+    And I follow "Foobar1"
     Then I should see 'Merge articles' button
