@@ -176,6 +176,8 @@ class Admin::ContentController < Admin::BaseController
         if merge_with
           @article.body = @article.body + merge_with.body
           @article.save!
+          Feedback.where(article_id: merge_with.id).update_all(article_id: @article.id)
+          merge_with.reload
           merge_with.destroy
         end
         destroy_the_draft unless @article.draft
