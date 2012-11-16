@@ -17,4 +17,6 @@ Feature: Merging articles
   Scenario: Merge articles
     When I go to the home page
     And I follow "Foobar1"
-    Then I should see 'Merge articles' button
+    When I fill in "Article ID" with "Foobar2"
+    And I press "Merge" button
+    Then I should see merged article
